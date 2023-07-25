@@ -1,6 +1,7 @@
 import React from "react";
-import MainNav from "./MainNav";
+
 import { Outlet } from "react-router";
+import MainNav from "./MainNav";
 
 const RootLayout = () => {
   return (
