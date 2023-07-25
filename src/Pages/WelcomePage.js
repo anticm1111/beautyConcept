@@ -12,7 +12,7 @@ const WelcomePage = () => {
         </video>
         <div className={classes.hero__text}>
           <h1>BEAUTY CONCEPT</h1>
-          <Link to="/">
+          <Link to="/auth">
             <h3>Sign up</h3>
           </Link>
           <p>& browse all our amazing products</p>

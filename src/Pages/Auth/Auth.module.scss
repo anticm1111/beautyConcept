@@ -1,0 +1,44 @@
+.auth {
+  width: 100%;
+  height: 100vh;
+  background: url("../../../public/Images/makeup3.jpg");
+  background-size: cover;
+  z-index: 0;
+  position: relative;
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    z-index: 10;
+    position: relative;
+    color: #fff;
+    font-size: 2rem;
+    button {
+      color: #fff;
+      background-color: transparent;
+      cursor: pointer;
+      transition: all 0.3s;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 1.2rem 3.2rem pink;
+      }
+    }
+  }
+
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.37), rgba(0, 0, 0, 0.37));
+    z-index: -1;
+  }
+}

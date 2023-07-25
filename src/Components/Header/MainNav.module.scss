@@ -1,10 +1,56 @@
 .header {
   display: flex;
   align-items: center;
-  // justify-content: space-between;
-  gap: 70rem;
+  justify-content: space-between;
+  // gap: 70rem;
   padding: 0 2rem;
-  &__logo {
+  position: fixed;
+  z-index: 9999;
+  width: 100%;
+
+  &__registration {
+    button {
+      font-size: 2rem;
+      background-color: transparent;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      position: relative;
+      &:active {
+        color: pink;
+      }
+    }
+    a {
+      text-decoration: none;
+      color: #fff;
+      font-size: 1.8rem;
+
+      &:hover {
+        color: pink;
+      }
+    }
+
+    &__list {
+      list-style: none;
+      transition: all 0.4s;
+
+      &_show {
+        opacity: 1;
+        visibility: visible;
+        list-style: none;
+        position: absolute;
+        top: 10rem;
+      }
+      &_hide {
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        top: 10rem;
+      }
+    }
   }
 
   &__logo img {
@@ -37,6 +83,7 @@
       display: flex;
       gap: 1rem;
       align-items: center;
+      font-family: "Poppins";
 
       &:hover {
         color: pink;

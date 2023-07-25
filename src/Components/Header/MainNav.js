@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./MainNav.module.scss";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 const MainNav = () => {
+  const [showMenu, setShowMenu] = useState(false);
   return (
     <div className={classes.header}>
       <div className={classes.header__logo}>
@@ -70,6 +72,25 @@ const MainNav = () => {
                 </li>
               </ul>
             </NavLink>
+          </li>
+        </ul>
+      </div>
+      <div className={classes.header__registration}>
+        <button onClick={(e) => setShowMenu(!showMenu)}>
+          Register <FontAwesomeIcon icon={faUser} />
+        </button>
+        <ul
+          className={`classes.header__registration__list ${
+            showMenu
+              ? classes.header__registration__list_show
+              : classes.header__registration__list_hide
+          }`}
+        >
+          <li>
+            <NavLink to="/Auth">Sign up</NavLink>
+          </li>
+          <li>
+            <NavLink to="/login">Log in</NavLink>
           </li>
         </ul>
       </div>
