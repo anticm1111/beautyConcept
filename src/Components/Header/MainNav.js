@@ -1,12 +1,38 @@
 import React, { useState } from "react";
 import classes from "./MainNav.module.scss";
-import { NavLink } from "react-router-dom";
+import {
+  NavLink,
+  redirect,
+  useRouteLoaderData,
+  useNavigate,
+} from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { CheckToken, IsAdmin } from "../../Pages/Auth/AuthLogic";
+import { useDispatch } from "react-redux";
+import { removeUserInfo } from "../../actions";
 
 const MainNav = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const token = useRouteLoaderData("root");
+  // const token = localStorage.getItem("token");
+  console.log("incoming token", token);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const isAuthenticated = token ? CheckToken(token) : false;
+  console.log("isAuth", isAuthenticated);
+  const isAdmin = token ? IsAdmin(token) : false;
+
+  const onLogoutHandler = () => {
+    localStorage.removeItem("token");
+    dispatch(removeUserInfo());
+    setShowMenu(!showMenu);
+    navigate("/auth");
+  };
+
   return (
     <div className={classes.header}>
       <div className={classes.header__logo}>
@@ -16,83 +42,108 @@ const MainNav = () => {
       </div>
       <div className="header__menu">
         <ul className={classes.header__list}>
-          <li>
-            <NavLink to="/">
-              Menu1
+          {isAuthenticated && (
+            <li>
+              Home
               <FontAwesomeIcon
                 icon={faAngleDown}
                 style={{ color: "#ffffff" }}
               />
               <ul className={classes.header__list__hover}>
                 <li>
-                  <NavLink to="/">item1</NavLink>
+                  <NavLink to="/">About Us</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/">item2</NavLink>
+                  <NavLink to="/">Gallery</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/">item3</NavLink>
+                  <NavLink to="/">Contact Us</NavLink>
                 </li>
               </ul>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/">
-              Menu2
+            </li>
+          )}
+          {isAuthenticated && (
+            <li>
+              Products
               <FontAwesomeIcon
                 icon={faAngleDown}
                 style={{ color: "#ffffff" }}
               />
               <ul className={classes.header__list__hover}>
                 <li>
-                  <NavLink to="/">other1</NavLink>
+                  <NavLink to="/">All products</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/">other2</NavLink>
+                  <NavLink to="/">Special offer</NavLink>
                 </li>
-                <li>
-                  <NavLink to="/">other3</NavLink>
-                </li>
+                {/* <li>
+                <NavLink to="/">other3</NavLink>
+              </li> */}
               </ul>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/">
-              Menu3
+            </li>
+          )}
+          {isAdmin && (
+            <li>
+              Admin
               <FontAwesomeIcon
                 icon={faAngleDown}
                 style={{ color: "#ffffff" }}
               />
               <ul className={classes.header__list__hover}>
                 <li>
-                  <NavLink to="/">Title1</NavLink>
+                  <NavLink to="/">Admin panel 1</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/">Title2</NavLink>
+                  <NavLink to="/">Admin panel 2</NavLink>
                 </li>
               </ul>
-            </NavLink>
-          </li>
+            </li>
+          )}
         </ul>
       </div>
+      {isAuthenticated ? <p>Cao milose</p> : <p>Registrujte se / prijavi</p>}
       <div className={classes.header__registration}>
-        <button onClick={(e) => setShowMenu(!showMenu)}>
-          Register <FontAwesomeIcon icon={faUser} />
-        </button>
-        <ul
-          className={`classes.header__registration__list ${
-            showMenu
-              ? classes.header__registration__list_show
-              : classes.header__registration__list_hide
-          }`}
-        >
-          <li>
-            <NavLink to="/Auth">Sign up</NavLink>
-          </li>
-          <li>
-            <NavLink to="/login">Log in</NavLink>
-          </li>
-        </ul>
+        {isAuthenticated ? (
+          <>
+            <button onClick={() => setShowMenu(!showMenu)}>
+              Profile <FontAwesomeIcon icon={faUser} />
+            </button>
+            <ul
+              className={`classes.header__registration__list ${
+                showMenu
+                  ? classes.header__registration__list_show
+                  : classes.header__registration__list_hide
+              }`}
+            >
+              <li>
+                <NavLink to="">Settings</NavLink>
+              </li>
+              <li>
+                <a onClick={onLogoutHandler}>Logout</a>
+              </li>
+            </ul>
+          </>
+        ) : (
+          <>
+            <button onClick={(e) => setShowMenu(!showMenu)}>
+              Register <FontAwesomeIcon icon={faUser} />
+            </button>
+            <ul
+              className={`classes.header__registration__list ${
+                showMenu
+                  ? classes.header__registration__list_show
+                  : classes.header__registration__list_hide
+              }`}
+            >
+              <li>
+                <NavLink to="/Auth">Sign up</NavLink>
+              </li>
+              <li>
+                <NavLink to="/login">Log in</NavLink>
+              </li>
+            </ul>
+          </>
+        )}
       </div>
     </div>
   );

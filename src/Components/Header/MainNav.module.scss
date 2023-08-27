@@ -23,13 +23,16 @@
         color: pink;
       }
     }
-    a {
-      text-decoration: none;
-      color: #fff;
-      font-size: 1.8rem;
+    li {
+      a {
+        text-decoration: none;
+        color: #fff;
+        font-size: 1.6rem;
 
-      &:hover {
-        color: pink;
+        &:hover {
+          color: pink;
+          cursor: pointer;
+        }
       }
     }
 
@@ -60,7 +63,7 @@
 
   &__list {
     display: flex;
-    gap: 4rem;
+    gap: 10rem;
     font-size: 2rem;
     list-style: none;
     li {
@@ -74,16 +77,21 @@
       transition: all 0.4s;
       position: absolute;
       top: 3.5rem;
-      left: 1rem;
-      font-size: 1.8rem;
+      left: 0.5rem;
+      font-size: 1.6rem;
     }
-    li a {
-      text-decoration: none;
+    li {
       color: #fff;
       display: flex;
       gap: 1rem;
       align-items: center;
       font-family: "Poppins";
+      cursor: pointer;
+      a {
+        text-decoration: none;
+        color: #fff;
+        display: flex;
+      }
 
       &:hover {
         color: pink;
