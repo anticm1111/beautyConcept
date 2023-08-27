@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import SignupForm from "../../Components/Auth/SignupForm";
+import LoginForm from "../../Components/Auth/LoginForm";
 import classes from "./Auth.module.scss";
 import { styled } from "styled-components";
 import { json, redirect, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { CheckToken } from "./AuthLogic";
 
 const Content = styled.div`
   display: flex;
@@ -18,22 +18,22 @@ const Content = styled.div`
   }
 `;
 
-const AuthPage = () => {
+const LoginPage = () => {
   const navigate = useNavigate();
 
   return (
     <div className={classes.auth}>
       <div className={classes.auth__section}>
-        <SignupForm />
+        <LoginForm />
 
         <Content>
-          <h3>Already have account?</h3>
+          <h3>Don't have account?</h3>
           <button
             onClick={(e) => {
-              navigate("/login");
+              navigate("/auth");
             }}
           >
-            Login
+            Signup
           </button>
         </Content>
       </div>
@@ -41,32 +41,33 @@ const AuthPage = () => {
   );
 };
 
-export default AuthPage;
+export default LoginPage;
 
 export async function action({ request }) {
+  // console.log("Login action", request);
+
   const data = await request.formData();
+  // console.log("Login action data", data);
 
   const authData = {
-    first_name: data.get("first_name"),
-    last_name: data.get("last_name"),
     email: data.get("email"),
     password: data.get("password"),
   };
 
   const response = await axios
-    .post(`${process.env.REACT_APP_API_URL}/api/auth/registe`, authData)
+    .post(`${process.env.REACT_APP_API_URL}/api/auth/login`, authData)
     .then((response) => {
-      // console.log("Signup response", response);
-      const token = response.data.token;
+      // console.log("response login", response);
+      const token = response.data.accessToken;
       localStorage.setItem("token", token);
     })
     .catch((error) => {
-      // console.log("Signup error", error);
+      // console.log("Login error", error);
       throw json({
         message: error.message,
         status: error.request.status,
-        title: error.response.statusText,
+        title: error.response.data,
       });
     });
-  return redirect("/home");
+  return redirect("/");
 }
