@@ -69,5 +69,5 @@ export async function action({ request }) {
         title: error.response.data,
       });
     });
-  return redirect("/");
+  return redirect("/home");
 }
