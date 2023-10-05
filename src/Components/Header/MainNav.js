@@ -30,7 +30,7 @@ const MainNav = () => {
     localStorage.removeItem("token");
     dispatch(removeUserInfo());
     setShowMenu(!showMenu);
-    navigate("/auth");
+    navigate("/");
   };
 
   return (
@@ -101,7 +101,7 @@ const MainNav = () => {
           )}
         </ul>
       </div>
-      {isAuthenticated ? <p>Cao milose</p> : <p>Registrujte se / prijavi</p>}
+
       <div className={classes.header__registration}>
         {isAuthenticated ? (
           <>
@@ -136,10 +136,14 @@ const MainNav = () => {
               }`}
             >
               <li>
-                <NavLink to="/Auth">Sign up</NavLink>
+                <NavLink to="/Auth" onClick={(e) => setShowMenu(!showMenu)}>
+                  Sign up
+                </NavLink>
               </li>
               <li>
-                <NavLink to="/login">Log in</NavLink>
+                <NavLink to="/login" onClick={(e) => setShowMenu(!showMenu)}>
+                  Log in
+                </NavLink>
               </li>
             </ul>
           </>
