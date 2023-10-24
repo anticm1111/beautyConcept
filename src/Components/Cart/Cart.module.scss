@@ -1,0 +1,39 @@
+.total,
+.actions {
+  font-size: 2.2rem;
+  display: flex;
+  gap: 5rem;
+}
+
+.button {
+  padding: 3rem;
+  border: 1px solid pink;
+  color: pink;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:active,
+  &:focus,
+  &:hover {
+    background-color: pink;
+    padding: 3rem;
+    border: 1px solid green;
+    color: #fff;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    border-radius: 15px;
+    outline: none;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.ul {
+  list-style: none;
+  font-size: 2rem;
+}

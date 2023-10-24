@@ -10,3 +10,22 @@ html {
   box-sizing: border-box;
   font-size: 62.5%;
 }
+
+body {
+
+  background: url("../public/Images/makeup3.jpg");
+  background-size: cover;
+
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.37), rgba(0, 0, 0, 0.37));
+    z-index: -1;
+  }
+}

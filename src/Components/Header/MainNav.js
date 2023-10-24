@@ -5,6 +5,7 @@ import {
   redirect,
   useRouteLoaderData,
   useNavigate,
+  Form,
 } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
@@ -12,26 +13,23 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { CheckToken, IsAdmin } from "../../Pages/Auth/AuthLogic";
 import { useDispatch } from "react-redux";
 import { removeUserInfo } from "../../actions";
+import CartHeader from "./CartHeader";
 
-const MainNav = () => {
+const MainNav = (props) => {
   const [showMenu, setShowMenu] = useState(false);
   const token = useRouteLoaderData("root");
   // const token = localStorage.getItem("token");
-  console.log("incoming token", token);
+  // console.log("incoming token", token);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // console.log("govno govnjivo", useRouteLoaderData("root"));
 
   const isAuthenticated = token ? CheckToken(token) : false;
+  console.log("tokens", token);
   console.log("isAuth", isAuthenticated);
   const isAdmin = token ? IsAdmin(token) : false;
-
-  const onLogoutHandler = () => {
-    localStorage.removeItem("token");
-    dispatch(removeUserInfo());
-    setShowMenu(!showMenu);
-    navigate("/");
-  };
+  console.log("isAdmin", isAdmin);
 
   return (
     <div className={classes.header}>
@@ -71,7 +69,14 @@ const MainNav = () => {
               />
               <ul className={classes.header__list__hover}>
                 <li>
-                  <NavLink to="/">All products</NavLink>
+                  <NavLink
+                    to="/products"
+                    className={({ isActive }) =>
+                      isActive ? classes.header__active : undefined
+                    }
+                  >
+                    All products
+                  </NavLink>
                 </li>
                 <li>
                   <NavLink to="/">Special offer</NavLink>
@@ -102,6 +107,10 @@ const MainNav = () => {
         </ul>
       </div>
 
+      <div></div>
+
+      {isAuthenticated && <CartHeader onShowCart={props.onShowCart} />}
+
       <div className={classes.header__registration}>
         {isAuthenticated ? (
           <>
@@ -119,7 +128,11 @@ const MainNav = () => {
                 <NavLink to="">Settings</NavLink>
               </li>
               <li>
-                <a onClick={onLogoutHandler}>Logout</a>
+                <Form action="/logout" method="post">
+                  <button onClick={(e) => setShowMenu(!showMenu)}>
+                    Logout
+                  </button>
+                </Form>
               </li>
             </ul>
           </>

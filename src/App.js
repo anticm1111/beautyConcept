@@ -7,7 +7,12 @@ import Login, { action as loginAction } from "./Pages/Auth/LoginPage";
 import ErrorPage from "./Pages/Error/ErrorPage";
 import HomePage from "./Pages/Home/HomePage";
 import ProductsPage from "./Pages/Products/ProductsPage";
-import { TokenLoader } from "./Pages/Auth/AuthLogic";
+import { TokenLoader, logoutAction } from "./Pages/Auth/AuthLogic";
+import { routeProtectionLoader } from "./Pages/Auth/AuthLogic";
+
+import ProductDetailsPage, {
+  loader as prodDetailsLoader,
+} from "./Pages/Products/Product/ProductDetailsPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -33,10 +38,20 @@ function App() {
         {
           path: "/home",
           element: <HomePage />,
+          // loader: routeProtectionLoader,
         },
         {
           path: "/products",
           element: <ProductsPage />,
+        },
+        {
+          path: "/products/:productID",
+          element: <ProductDetailsPage />,
+          loader: prodDetailsLoader,
+        },
+        {
+          path: "/logout",
+          action: logoutAction,
         },
       ],
     },
