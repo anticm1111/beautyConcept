@@ -1,4 +1,5 @@
 import jwt from "jwt-decode";
+import { redirect } from "react-router";
 
 export const CheckToken = (token) => {
   // const token = localStorage.getItem("Token")
@@ -31,7 +32,7 @@ export const DecodeToken = (token) => {
 };
 
 export const TokenLoader = () => {
-  console.log("OKIDAM !!!token loader main");
+  // console.log("OKIDAM !!!token loader main");
 
   const token = localStorage.getItem("token");
   console.log(token, "TOKEN");
@@ -41,5 +42,22 @@ export const TokenLoader = () => {
 export const IsAdmin = (token) => {
   const decodedToken = jwt(token);
 
-  return decodedToken.IsAdmin;
+  return decodedToken.isAdmin;
+};
+
+export const routeProtectionLoader = () => {
+  const token = TokenLoader();
+  const isAuthenticated = token ? CheckToken(token) : false;
+
+  if (!isAuthenticated) {
+    console.log("IsAuthenticated - route protection", isAuthenticated);
+    return redirect("/auth");
+  }
+
+  return null;
+};
+
+export const logoutAction = () => {
+  localStorage.removeItem("token");
+  return redirect("/auth");
 };

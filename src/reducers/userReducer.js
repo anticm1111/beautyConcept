@@ -10,7 +10,7 @@ const defaultState = {
 
 export default (state = defaultState, { type = "", payload = [] }) =>
   produce(state, (draft) => {
-    console.log("userReducer payload", payload);
+    // console.log("userReducer payload", payload);
     switch (type) {
       case TYPES.ADD_USER_DETAILS:
         draft = payload;
@@ -19,6 +19,8 @@ export default (state = defaultState, { type = "", payload = [] }) =>
       case TYPES.REMOVE_USER_DETAILS:
         draft = "";
         // testiraj za admina
+        console.log("logout dispatch", draft);
+
         return draft;
 
       default:

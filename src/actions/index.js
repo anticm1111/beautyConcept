@@ -1,4 +1,5 @@
 import * as TYPES from "../actions/types";
+import axios from "axios";
 
 // USER
 
@@ -15,3 +16,64 @@ export const removeUserInfo = () => (dispatch) => {
     type: TYPES.REMOVE_USER_DETAILS,
   });
 };
+
+//PRODUCTS
+
+export const getProducts = () => async (dispatch) => {
+  dispatch({
+    type: TYPES.FETCH_PRODUCTS_STARTED,
+  });
+
+  await axios
+    .get(`${process.env.REACT_APP_API_URL}/api/products`)
+    .then((res) => {
+      console.log("fetched products", res);
+      dispatch({
+        type: TYPES.FETCH_PRODUCTS_FINISHED,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log("Error fetching products", err);
+      dispatch({
+        type: TYPES.FETCH_PRODUCTS_FINISHED,
+      });
+    });
+};
+
+// CART
+
+export const addItemsToCart = (item) => (dispatch) => {
+  dispatch({ type: TYPES.ADD_CART_ITEMS, payload: item });
+};
+
+export const removeItemsFromCart = (id) => (dispatch) => {
+  dispatch({ type: TYPES.REMOVE_CART_ITEMS, payload: id });
+};
+
+// PRODUCT
+
+// export const fetchSingleProduct = (id) => async (dispatch) => {
+//   dispatch({ type: TYPES.FETCH_PRODUCT_STARTED });
+//   await axios
+//     .get(`${process.env.REACT_APP_API_URL}/api/productss/` + id)
+//     .then((res) => {
+//       console.log("fetchProductRes", res);
+//       dispatch({
+//         type: TYPES.FETCH_PRODUCT_FINISHED,
+//         payload: res.data,
+//       });
+//     })
+//     .catch((error) => {
+//       console.log("SingleProdErr", error);
+
+//       throw json({
+//         message: error.message,
+//         status: error.request.status,
+//         title: error.response.statusText,
+//       });
+//       dispatch({
+//         type: TYPES.FETCH_PRODUCT_ERROR,
+//       });
+//     });
+// };
