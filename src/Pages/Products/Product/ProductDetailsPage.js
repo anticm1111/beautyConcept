@@ -7,7 +7,6 @@ import ProductForm from "../../../Components/Products/ProductForm";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemsToCart, removeItemsFromCart } from "../../../actions";
 
-const ProductDetailsPage = () => {
   const ProdDetails = styled.div`
     /* background-color: pink; */
     display: flex;
@@ -55,6 +54,9 @@ const ProductDetailsPage = () => {
       height: 15rem;
     }
   `;
+
+const ProductDetailsPage = () => {
+
 
   const productDetails = useLoaderData();
   console.log("prodDetails.DAta", productDetails.data);

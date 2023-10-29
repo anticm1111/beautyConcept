@@ -13,6 +13,7 @@ import { routeProtectionLoader } from "./Pages/Auth/AuthLogic";
 import ProductDetailsPage, {
   loader as prodDetailsLoader,
 } from "./Pages/Products/Product/ProductDetailsPage";
+import UsersPage from "./Pages/Users/UsersPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -52,6 +53,10 @@ function App() {
         {
           path: "/logout",
           action: logoutAction,
+        },
+        {
+          path: "/users",
+          element: <UsersPage />,
         },
       ],
     },

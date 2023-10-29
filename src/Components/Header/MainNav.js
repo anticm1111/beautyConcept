@@ -28,7 +28,7 @@ const MainNav = (props) => {
   const isAuthenticated = token ? CheckToken(token) : false;
   console.log("tokens", token);
   console.log("isAuth", isAuthenticated);
-  const isAdmin = token ? IsAdmin(token) : false;
+  const isAdmin = isAuthenticated ? IsAdmin(token) : false;
   console.log("isAdmin", isAdmin);
 
   return (
@@ -87,6 +87,35 @@ const MainNav = (props) => {
               </ul>
             </li>
           )}
+          {/* USERS  */}
+          {isAuthenticated && (
+            <li>
+              Users
+              <FontAwesomeIcon
+                icon={faAngleDown}
+                style={{ color: "#ffffff" }}
+              />
+              <ul className={classes.header__list__hover}>
+                <li>
+                  <NavLink
+                    to="/users"
+                    className={({ isActive }) =>
+                      isActive ? classes.header__active : undefined
+                    }
+                  >
+                    All users
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/">Admin users</NavLink>
+                </li>
+                {/* <li>
+                <NavLink to="/">other3</NavLink>
+              </li> */}
+              </ul>
+            </li>
+          )}
+
           {isAdmin && (
             <li>
               Admin
@@ -106,8 +135,6 @@ const MainNav = (props) => {
           )}
         </ul>
       </div>
-
-      <div></div>
 
       {isAuthenticated && <CartHeader onShowCart={props.onShowCart} />}
 
